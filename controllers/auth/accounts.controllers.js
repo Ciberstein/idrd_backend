@@ -149,11 +149,35 @@ exports.refresh = catchAsync(async (req, res) => {
 exports.validate_session = catchAsync(async (req, res) => {
   const { cookies } = req;
 
-  if (cookies.token) {
-    return res.status(200).json({ auth: true });
-  }
+  if (!cookies.token) return res.status(200).json({ auth: false });
 
-  return res.status(200).json({ auth: false });
+  const decoded = jwt.decode(cookies.token);
+  if (!decoded?.id) return res.status(200).json({ auth: false });
+
+  const account = await Accounts.Account.findOne({
+    where: { id: decoded.id },
+    attributes: ["id", "authority", "first_name", "middle_name", "last_name1", "last_name2", "birth_date", "doc_number", "email", "phone", "createdAt"],
+    include: [{ model: Accounts.DocType, as: 'docType', attributes: ['code', 'name'] }],
+  });
+
+  if (!account) return res.status(200).json({ auth: false });
+
+  return res.status(200).json({
+    auth: true,
+    user: {
+      id: account.id,
+      authority: account.authority,
+      first_name: account.first_name,
+      middle_name: account.middle_name,
+      last_name1: account.last_name1,
+      last_name2: account.last_name2,
+      birth_date: account.birth_date,
+      doc_type: account.docType?.code ?? null,
+      doc_number: account.doc_number,
+      email: account.email,
+      phone: account.phone ?? null,
+    },
+  });
 });
 
 exports.update_email = catchAsync(async (req, res) => {
