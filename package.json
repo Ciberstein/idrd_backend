@@ -1,17 +1,17 @@
 {
-  "name": "template_backend",
+  "name": "irdr_backend",
   "version": "1.0.0",
-  "description": "",
-  "homepage": "https://github.com/Ciberstein/monitor_dh_backend#readme",
+  "description": "API REST del portal ciudadano del IDRD — reservas de gimnasios distritales de Bogotá",
+  "homepage": "https://github.com/Ciberstein/irdr_backend#readme",
   "bugs": {
-    "url": "https://github.com/Ciberstein/monitor_dh_backend/issues"
+    "url": "https://github.com/Ciberstein/irdr_backend/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ciberstein/monitor_dh_backend.git"
+    "url": "git+https://github.com/Ciberstein/irdr_backend.git"
   },
   "license": "ISC",
-  "author": "Cyberstein",
+  "author": "Ciberstein",
   "type": "commonjs",
   "main": "app.js",
   "scripts": {
