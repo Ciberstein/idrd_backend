@@ -74,6 +74,7 @@ router.post(
 */
 router.post(
   "/recovery",
+  middlewares.turnstile.verify,
   middlewares.accounts.recovery,
   middlewares.accounts.by_email,
   middlewares.auth.code_generate,
