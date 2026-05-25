@@ -23,7 +23,7 @@ db.authenticate()
 
     init();
 
-    return db.sync({ alter: true, force: false });
+    return db.sync({ force: false });
   })
   .then(async () => {
     console.log("\x1b[34mDATABASE STATUS:\x1b[0m", "\x1b[32mSYNC\x1b[0m");
