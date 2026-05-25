@@ -23,7 +23,7 @@ const config = [
   },
   {
     key: "project_name",
-    value: "Backend template",
+    value: "Portal Ciudadano IDRD",
     data_type: "string",
     description: "Name of project",
     categoryId: 5
