@@ -22,6 +22,17 @@ const init = () => {
 
   /* ACCOUNTS RELATIONSHIPS */
 
+  Accounts.Role.hasMany(Accounts.Account, {
+    foreignKey: 'authority',
+    sourceKey: 'code',
+    as: 'accounts',
+  });
+  Accounts.Account.belongsTo(Accounts.Role, {
+    foreignKey: 'authority',
+    targetKey: 'code',
+    as: 'role',
+  });
+
   Accounts.DocType.hasMany(Accounts.Account, {
     foreignKey: 'doc_type_id',
     as: 'accounts',

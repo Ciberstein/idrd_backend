@@ -55,7 +55,7 @@ exports.validate = catchAsync(async (req, res) => {
   const { code } = req;
 
   await code.account.update({
-    authority: 0,
+    authority: 1,
   });
 
   return res.status(200).json({

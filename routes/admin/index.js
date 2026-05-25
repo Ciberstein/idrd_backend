@@ -11,7 +11,7 @@ const middlewares = {
 const router = express.Router();
 
 router.use(middlewares.auth.protect);
-router.use(middlewares.auth.restrict(1));
+router.use(middlewares.auth.restrict(100));
 
 router.get("/users", controllers.accounts.list);
 router.get("/users/:id", controllers.accounts.getOne);

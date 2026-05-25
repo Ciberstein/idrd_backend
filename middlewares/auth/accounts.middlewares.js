@@ -48,20 +48,22 @@ exports.by_email = catchAsync(async (req, _, next) => {
 exports.verified = catchAsync(async (req, res, next) => {
   const { account } = req;
 
-  if(account.authority >= 0) {
+  if (account.authority === -1) {
+    return next(new AppError('Tu cuenta ha sido suspendida', 403));
+  }
 
-    const maintenace = await app_config('maintenance_mode');
-
-    if(maintenace && account.authority < 5) {
-      return next(new AppError(`Web is under maintenace`, 406));
+  if (account.authority >= 1) {
+    const maintenance = await app_config('maintenance_mode');
+    if (maintenance && account.authority < 100) {
+      return next(new AppError('El sitio está en mantenimiento', 406));
     }
 
     const token = await generateJWT(account.id);
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: true, 
-      sameSite: 'strict', 
+      secure: true,
+      sameSite: 'strict',
     });
 
     return res.status(200).json({
@@ -81,9 +83,9 @@ exports.verified = catchAsync(async (req, res, next) => {
         phone: account.phone ?? null,
       },
     });
-
   }
 
+  // authority === 0: not verified, continue to 2FA
   next();
 });
 

@@ -1,5 +1,21 @@
 const Accounts = require("../models/accounts.models");
 
+const ROLES = [
+  { code: -1, name: "Baneado" },
+  { code: 0,  name: "No verificado" },
+  { code: 1,  name: "Usuario" },
+  { code: 100, name: "Administrador" },
+];
+
+const roles_seeder = async () => {
+  try {
+    await Accounts.Role.bulkCreate(ROLES, { updateOnDuplicate: ["name"] });
+    console.log("\x1b[34mROLES TABLE STATUS:\x1b[0m", "\x1b[32mSYNC\x1b[0m");
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 const DOC_TYPES = [
   { code: "CC", name: "Cédula de Ciudadanía" },
   { code: "CE", name: "Cédula de Extranjería" },
@@ -45,4 +61,4 @@ const via_types_seeder = async () => {
   }
 };
 
-module.exports = { doc_types_seeder, via_types_seeder, DOC_TYPES, VIA_TYPES };
+module.exports = { roles_seeder, doc_types_seeder, via_types_seeder, ROLES, DOC_TYPES, VIA_TYPES };

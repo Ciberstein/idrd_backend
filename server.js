@@ -5,6 +5,7 @@ const init = require("./models/init.models");
 
 // SEEDERS
 const { app_config_categories_seeder, app_config_seeder } = require("./seeders/app.seeders");
+const { roles_seeder } = require("./seeders/accounts.seeders");
 
 const PORT = process.env.PORT || 3010;
 const SCHEMAS = ["accounts", "auth", "app"];
@@ -27,6 +28,7 @@ db.authenticate()
   .then(async () => {
     console.log("\x1b[34mDATABASE STATUS:\x1b[0m", "\x1b[32mSYNC\x1b[0m");
 
+    await roles_seeder();
     await app_config_categories_seeder();
     await app_config_seeder();
   })

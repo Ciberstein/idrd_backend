@@ -44,9 +44,11 @@ exports.protect = catchAsync(async (req, _, next) => {
   });
 
   if (!account) {
-    return next(
-      new AppError('The owner of this account is no longer available', 406)
-    );
+    return next(new AppError('The owner of this account is no longer available', 406));
+  }
+
+  if (account.authority === -1) {
+    return next(new AppError('Tu cuenta ha sido suspendida', 403));
   }
 
   req.sessionAccount = account;

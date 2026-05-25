@@ -3,7 +3,7 @@ require("dotenv").config({ path: require("path").join(__dirname, "../.env") });
 const { db } = require("../database/config");
 const init = require("../models/init.models");
 const { app_config_categories_seeder, app_config_seeder } = require("../seeders/app.seeders");
-const { doc_types_seeder, via_types_seeder } = require("../seeders/accounts.seeders");
+const { roles_seeder, doc_types_seeder, via_types_seeder } = require("../seeders/accounts.seeders");
 const { gimnasios_seeder } = require("../seeders/gimnasios.seeders");
 
 const SCHEMAS = ["accounts", "auth", "app"];
@@ -15,6 +15,7 @@ const RESET_TABLES = [
   '"app"."reservas"',
   '"accounts"."addresses"',
   '"accounts"."accounts"',
+  '"accounts"."roles"',
   '"accounts"."doc_types"',
 ];
 
@@ -39,6 +40,7 @@ async function setup() {
     await db.sync({ force: false });
     console.log("✔  Tables synchronized");
 
+    await roles_seeder();
     await doc_types_seeder();
     await via_types_seeder();
     await gimnasios_seeder();

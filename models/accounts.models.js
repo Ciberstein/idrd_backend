@@ -1,6 +1,32 @@
 const { DataTypes } = require("sequelize");
 const { db } = require("../database/config");
 
+const Role = db.define(
+  "roles",
+  {
+    id: {
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    code: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: "roles",
+    schema: "accounts",
+    timestamps: false,
+  }
+);
+
 const DocType = db.define(
   "doc_types",
   {
@@ -40,7 +66,7 @@ const Account = db.define(
     authority: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: -1,
+      defaultValue: 0,
       field: "authority",
     },
     lang: {
@@ -224,6 +250,7 @@ const Address = db.define(
 
 const Accounts = {
   Account,
+  Role,
   DocType,
   ViaType,
   Address,
