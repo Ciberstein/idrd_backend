@@ -16,6 +16,7 @@ const { globalErrorHandler } = require('./controllers/error.controllers');
 // ROUTES //
 const user = require("./routes/user");
 const auth = require("./routes/auth");
+const admin = require("./routes/admin");
 
 if (process.env.NODE_ENV === "development") 
   app.use(morgan("dev"));
@@ -29,6 +30,7 @@ app.use(express.json(
 
 router.use("/me", user);
 router.use("/auth", auth);
+router.use("/admin", admin);
 
 app.use("/api/v1", router);
 
