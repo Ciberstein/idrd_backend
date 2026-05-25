@@ -131,16 +131,28 @@ exports.code_send = catchAsync(async (req, _, next) => {
   });
 
 
-  const body = `Hello, <br />Here you have a temporary security code for your account. 
-    It can only be used once within the next ${formatTime(
-      process.env.MAIL_CODE_EXPIRE * 1000
-    )}, after which it will expire:<br /><br />
-    <b>${code}</b><br /><br />Did you receive this email without having an active request to enter a verification code? 
-    If so, the security of your account may be compromised. Please change your password as soon as possible.`;
+  const body = `
+    <p style="margin:0 0 16px">Hola,</p>
+    <p style="margin:0 0 24px;color:#475569;">
+      Recibiste este correo porque se solicitó un código de verificación para tu cuenta.
+      A continuación encontrarás tu código de acceso:
+    </p>
+    <div style="text-align:center;margin:0 0 24px;">
+      <span style="display:inline-block;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;padding:16px 40px;font-size:32px;font-weight:700;letter-spacing:8px;color:#4f46e5;font-family:monospace;">
+        ${code}
+      </span>
+    </div>
+    <p style="margin:0 0 24px;color:#475569;">
+      Este código es válido por <strong>${formatTime(process.env.MAIL_CODE_EXPIRE * 1000)}</strong>
+      y solo puede usarse una vez.
+    </p>
+    <p style="margin:0;color:#94a3b8;font-size:13px;">
+      Si no solicitaste este código, ignora este mensaje. Si crees que tu cuenta pudo haber sido comprometida, cambia tu contraseña lo antes posible.
+    </p>`;
 
   req.mail = await mail(
     email,
-    "Security code",
+    "Código de verificación",
     body,
     sender.value
   );
