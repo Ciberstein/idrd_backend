@@ -11,12 +11,14 @@ const middlewares = {
   register: require("../../middlewares/auth/register.middlewares"),
   login: require("../../middlewares/auth/login.middlewares"),
   accounts: require("../../middlewares/auth/accounts.middlewares"),
+  turnstile: require("../../middlewares/turnstile.middleware"),
 };
 
 const router = express.Router();
 
 router.post(
   "/register",
+  middlewares.turnstile.verify,
   middlewares.register.validate,
   middlewares.register.account,
   middlewares.register.create,
@@ -37,6 +39,7 @@ router.post(
 
 router.post(
   "/login",
+  middlewares.turnstile.verify,
   middlewares.login.validate,
   middlewares.accounts.by_email,
   middlewares.login.authentication,
